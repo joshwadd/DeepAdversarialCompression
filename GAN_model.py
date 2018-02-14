@@ -104,7 +104,8 @@ class GAN_model:
             loss_recon_scaled = c.SCALE_RECON*self.loss_recon
             self.generator_loss = loss_recon_scaled
             if c.ADVERSARIAL:
-                self.generator_loss += c.LAM_ADV*self.loss_adv_G
+                #Note += is not a valid overloaded operator in tensorflow
+                self.generator_loss = self.generator_loss + c.LAM_ADV*self.loss_adv_G
             self.loss_entropy_scaled = c.SCALE_ENTROPY*self.loss_entropy
 
             #Combine the recon/gan loss with the entropy loss for generator
@@ -113,14 +114,17 @@ class GAN_model:
             if c.ADVERSARIAL:
                 self.discriminator_loss = self.loss_adv_D  #May need to scale this
 
-            if c.ADVERSARIAL:
+
+
             #Calcualate and output the gradient of the loss function with respect to recon and adversial component
+
+            self.grad_recon = tf.gradients(self.loss_recon, self.prediction)
+            self.grad_entropy = tf.gradients(self.loss_entropy , self.code)
+            tf.summary.histogram('Gradient_reconstruction', self.grad_recon)
+            tf.summary.histogram('Gradient_entropy', self.grad_entropy)
+            if c.ADVERSARIAL:
                 self.grad_adv = tf.gradients(self.loss_adv_G, self.prediction)
-                self.grad_recon = tf.gradients(self.loss_recon, self.prediction)
-                self.grad_entropy = tf.gradients(self.loss_entropy , self.code)
                 tf.summary.histogram('Gradient_adverisal', self.grad_adv)
-                tf.summary.histogram('Gradient_reconstruction', self.grad_recon)
-                tf.summary.histogram('Gradient_entropy', self.grad_entropy)
 
 
             #Add the losses to summaries

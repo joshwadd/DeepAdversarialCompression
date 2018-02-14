@@ -111,14 +111,14 @@ class DAC_runner:
 
 
 def main():
-    load_path = None
-    #load_path = './'+c.MODEL_SAVE_DIR + 'model.ckpt-60000'
+    #load_path = None
+    load_path = './'+c.MODEL_SAVE_DIR + 'model.ckpt-260000'
 
  ## make all the fancy command line stuff here
     DeepAdversialCompression = DAC_runner(121000, load_path)
 
-    DeepAdversialCompression.train()
-    #DeepAdversialCompression.test()
+    #DeepAdversialCompression.train()
+    DeepAdversialCompression.test()
 
 
 

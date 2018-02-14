@@ -15,9 +15,9 @@ TRAIN_HEIGHT = TRAIN_WIDTH = 128
 NUMBER_OF_MIXTURE = 6
 GSM_SAMPLE = 24576
 #Important rate distorition tradeoff parameter
-ALPHA = 0.2
+ALPHA = 0.4
 
-DIM_REDUCTION = 2
+DIM_REDUCTION = 10
 
 #Type of quantisation model to use
     #True :   rounding
@@ -26,7 +26,7 @@ QUANT_MODEL = True
 
 #If the adversial training process should be balanced as a function
 #of the prediction accuracy
-BABYSIT = True
+BABYSIT = False
 LOWER = 0.8
 UPPER = 0.95
 SMOOTHING =0.8
@@ -57,7 +57,7 @@ L_NUM = 2
 # the power to which each gradient term is raised in GDL loss
 ALPHA_NUM = 1
 # the percentage of the adversarial loss to use in the combined loss
-LAM_ADV = 1.0
+LAM_ADV = 0.1
 # the percentage of the lp loss to use in the combined loss
 #LAM_LP = 0.8
 # the percentage of the GDL loss to use in the combined loss
@@ -69,14 +69,14 @@ LAM_GDL = 1
 
 # learning rate for the generator model
 # Default of 0.0001 works well for the first 100k iterations of CAE
-LRATE_G = 0.00001  #
+LRATE_G = 0.001  #
 
 ##
 # Discriminator model
 ##
 
 # learning rate for the discriminator model
-LRATE_D = 0.00005
+LRATE_D = 0.005
 
 
 
@@ -195,7 +195,7 @@ def clear_save_name():
 SAVE_DIR = get_dir('../Save/')
 
 # inner directory to differentiate between runs
-SAVE_NAME = 'DAC_round_'+ str(DIM_REDUCTION) +'_0.2/'
+SAVE_NAME = 'DAC_round_'+ str(DIM_REDUCTION) +'_' + str(ALPHA) + '/'
 
 # directory for saved models
 #MODEL_SAVE_DIR = get_dir(os.path.join(SAVE_DIR, 'Models/', SAVE_NAME))
